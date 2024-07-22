@@ -1,3 +1,4 @@
+import sendMessage from "../../sendMessage"
 import getPulls from "../getPulls"
 require('dotenv').config()
 
@@ -24,24 +25,22 @@ async function checkReviewers(){
         pullRevised.push(returned)
     }
 
-    console.log("pullsNumbers", pullsNumbers, "pullReviewers", pullReviewers, "pullRevised", pullRevised)
-
     for(let i = 0; i < pullsNumbers.length; i++){
         //Caso alguma revisão foi feita e precisa de alterações no código
         if(pullRevised[i][0].state == 'CHANGES_REQUESTED'){
-            console.log("alteração no pr " + pullsNumbers[i])
+            await sendMessage(`Pull Request: ${pulls[i].title} #${pullsNumbers[i]} Alteração de código solicitada.`)
         }
         //Caso não tenha sido marcado para niguem fazer as revisões e não tenha sido feita nenhuma revisão
         else if(pullReviewers[i][0] == null && pullRevised[i][0] == null){
-            console.log("sem revisores e revisados " + pullsNumbers[i])
+            await sendMessage(`Pull Request: ${pulls[i].title} #${pullsNumbers[i]} Nenhum revisor selecionado.`)
         }
         //Caso tenha sido marcado para duas pessoas fazerem as revisões e não tenha sido feita nenhuma revisão
         else if(pullReviewers[i].length == 2 && pullRevised[i][0] == null){
-            console.log("com revisores e sem revisados " + pullsNumbers[i])
+            await sendMessage(`Pull Request: ${pulls[i].title} #${pullsNumbers[i]} Nenhuma revisão concluida.`)
         }
         //Caso uma pessoa não fez a revisão e uma tenha feito revisão
         else if(pullReviewers[i].length == 1 && pullRevised[i].length == 1){
-            console.log("com um revisor e um revisado " + pullsNumbers[i])
+            await sendMessage(`Pull Request: ${pulls[i].title} #${pullsNumbers[i]} Uma revisão de duas concluida.`)
         }
     }
 }
