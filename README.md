@@ -6,6 +6,7 @@ Este projeto foi desenvolvido para atender a uma necessidade de verificação de
 
 - [Instalação](#instalação)
 - [Utilização](#utilização)
+- [Licença](./LICENSE)
 
 ## Instalação
 
