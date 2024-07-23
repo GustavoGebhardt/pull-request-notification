@@ -1,4 +1,5 @@
 import checkReviewers from "./gitHub/checkReviewers";
+require('dotenv').config()
 
 checkReviewers()
-//setInterval(() => {checkReviewers()}, 3600000) Repetir em 1 hora
+setInterval(() => {checkReviewers()}, parseInt(process.env.EXECUTION_INTERVAL!) * 3600000) //Multiplica o valor em 1 hora 3600000
